@@ -1,5 +1,7 @@
 from __future__ import print_function #Python 2.7 compatibility
 from srwl_uti_dataProcess import *
+import sys
+sys.path.insert(0,'/home/vagrant/src/bnash/SRW/env/work/srw_python')
 from propParamLib import*
 import numpy as np, numpy.ma as ma
 import math
@@ -30,7 +32,7 @@ phE = 10e3
 nx=50
 ny=nx
 sampFact = 0 ##25, 44, 60
-constConvRad = 1.23984186e-06/(4*3.1415926536)  ##conversion from energy to 1/wavelength
+constConvRad = 1.23984186e-06/(4*3.1415926536)  ##conversion from Energy to 1/wavelength
 rmsAngDiv = constConvRad/(phE*sigrW)
 mx = 0
 my = 0
@@ -41,7 +43,7 @@ print("SRW calculated: <xx'> = %s" %wfr0.arMomX[6])
 
 print("grid size of initial wavefront from createGsnSrc function: %s x %s" %((wfr0.mesh.nx),((wfr0.mesh.ny))))
 
-lvals = np.linspace(-150,150,7) 
+lvals = np.linspace(-150,150,2) 
 lint = 0
 srwsigxvals=[]
 srwsigxpvals=[]
@@ -84,38 +86,38 @@ plt.rcParams.update({'legend.labelspacing':0.25, 'legend.handlelength': 2})
 hfontLarge = {'fontname':'Latin Modern Roman', 'size' : 24, 'weight' : 'bold'}
 plt.rcParams.update({'xtick.labelsize':20,'ytick.labelsize':20})
 
-fig = plt.figure(figsize=(14,9))
-ax = fig.gca()
-ax.plot(lvals,srwsigxvals, 'bo-',label=r'SRW <xx>',linewidth=6.)
-ax.plot(lvals,siganalyticvals, 'go-',label=r'Analytic <xx>',linewidth=6.)
-ax.plot(lvals,pysigxvals, 'r--',label=r'Python function <xx>',linewidth=6.)
+#fig = plt.figure(figsize=(14,9))
+#ax = fig.gca()
+#ax.plot(lvals,srwsigxvals, 'bo-',label=r'SRW <xx>',linewidth=6.)
+#ax.plot(lvals,siganalyticvals, 'go-',label=r'Analytic <xx>',linewidth=6.)
+#ax.plot(lvals,pysigxvals, 'r--',label=r'Python function <xx>',linewidth=6.)
   
-ax.set_ylabel(r'<xx> [m]',**hfontLarge)
-ax.set_xlabel(r'Drift Length [m]',**hfontLarge)
+#ax.set_ylabel(r'<xx> [m]',**hfontLarge)
+#ax.set_xlabel(r'Drift Length [m]',**hfontLarge)
 #ax.set_title('RMS Beam Size vs Rel. Change in Focal Length',**hfontLarge)
     
-ax.legend(loc='best',prop={'size': 22})
+#ax.legend(loc='best',prop={'size': 22})
    
-ax.grid(color='k', linestyle='dashed', linewidth=1)
+#ax.grid(color='k', linestyle='dashed', linewidth=1)
 
 
 ##Plot <xp> comparison
-plt.rcParams.update({'legend.labelspacing':0.25, 'legend.handlelength': 2})
-hfontLarge = {'fontname':'Latin Modern Roman', 'size' : 24, 'weight' : 'bold'}
-plt.rcParams.update({'xtick.labelsize':20,'ytick.labelsize':20})
+#plt.rcParams.update({'legend.labelspacing':0.25, 'legend.handlelength': 2})
+#hfontLarge = {'fontname':'Latin Modern Roman', 'size' : 24, 'weight' : 'bold'}
+#plt.rcParams.update({'xtick.labelsize':20,'ytick.labelsize':20})
 
-fig = plt.figure(figsize=(14,9))
-ax = fig.gca()
-ax.plot(lvals,srwsigxpvals, 'bo-',label=r'SRW <xp>',linewidth=6.)
+#fig = plt.figure(figsize=(14,9))
+#ax = fig.gca()
+#ax.plot(lvals,srwsigxpvals, 'bo-',label=r'SRW <xp>',linewidth=6.)
 
   
-ax.set_ylabel(r'<xp> [m*rad]',**hfontLarge)
-ax.set_xlabel(r'Drift Length [m]',**hfontLarge)
+#ax.set_ylabel(r'<xp> [m*rad]',**hfontLarge)
+#ax.set_xlabel(r'Drift Length [m]',**hfontLarge)
 #ax.set_title('RMS Beam Size vs Rel. Change in Focal Length',**hfontLarge)
     
-ax.legend(loc='best',prop={'size': 22})
+#ax.legend(loc='best',prop={'size': 22})
    
-ax.grid(color='k', linestyle='dashed', linewidth=1)
+#ax.grid(color='k', linestyle='dashed', linewidth=1)
 
 print("SRW calculated: <xx'> = %s" %wfr0.arMomX[6])
 print("SRW calculated: <xx'> values = %s" %srwsigxpvals)
