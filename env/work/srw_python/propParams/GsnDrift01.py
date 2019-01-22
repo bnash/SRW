@@ -1,10 +1,11 @@
 from __future__ import print_function #Python 2.7 compatibility
 from srwl_uti_dataProcess import *
+import sys
+sys.path.insert(0,'/home/vagrant/src/bnash/SRW/env/work/srw_python')
 from propParamLib import*
 import numpy as np, numpy.ma as ma
 import math
-import os 
-import sys
+import os
 import time
 
 ##Create Gaussian wavefront

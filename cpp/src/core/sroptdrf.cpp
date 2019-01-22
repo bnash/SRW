@@ -49,6 +49,7 @@ int srTDriftSpace::AuxPropagateRadMoments(srTSRWRadStructAccessData* pRadAccessD
 	srTMomentsRatios* tMomRatArray = MomRatArray;
 
 	int OffsetE = 0;
+        std::cout << "inside srTDriftSpace::AuxPropagateRadMoments\n";
 	for(long ie=0; ie<pRadAccessData->ne; ie++)
 	{
 		srTMomentsPtrs MomX(pRadAccessData->pMomX + OffsetE);
@@ -58,34 +59,34 @@ int srTDriftSpace::AuxPropagateRadMoments(srTSRWRadStructAccessData* pRadAccessD
 			//float OldMomX_zz = *(MomX.pZZ), OldMomX_zpzp = *(MomX.pZPZP);
 			double OldMomX_xx = *(MomX.pXX), OldMomX_xpxp = *(MomX.pXPXP);
 			double OldMomX_zz = *(MomX.pZZ), OldMomX_zpzp = *(MomX.pZPZP);
-			
+
 			*v2dAux1 = *(MomX.pX); *(v2dAux1+1) = *(MomX.pXP);
 			MultSquareMatrByVect(ax, v2dAux1, 2, v2dAux2);
 			*(MomX.pX) = *v2dAux2; *(MomX.pXP) = *(v2dAux2+1);
-			
+
 			*v2dAux1 = *(MomX.pZ); *(v2dAux1+1) = *(MomX.pZP);
 			MultSquareMatrByVect(az, v2dAux1, 2, v2dAux2);
 			*(MomX.pZ) = *v2dAux2; *(MomX.pZP) = *(v2dAux2+1);
-			
+
 			*v3dAux1 = *(MomX.pXX); *(v3dAux1+1) = *(MomX.pXXP); *(v3dAux1+2) = *(MomX.pXPXP);
 			MultSquareMatrByVect(bx, v3dAux1, 3, v3dAux2);
 			*(MomX.pXX) = *v3dAux2; *(MomX.pXXP) = *(v3dAux2+1); *(MomX.pXPXP) = *(v3dAux2+2);
-			
+
 			*v3dAux1 = *(MomX.pZZ); *(v3dAux1+1) = *(MomX.pZZP); *(v3dAux1+2) = *(MomX.pZPZP);
 			MultSquareMatrByVect(bz, v3dAux1, 3, v3dAux2);
 			*(MomX.pZZ) = *v3dAux2; *(MomX.pZZP) = *(v3dAux2+1); *(MomX.pZPZP) = *(v3dAux2+2);
-			
-			//Protection against zero or negative spot sizes 
+
+			//Protection against zero or negative spot sizes
 			SigXe2 = (*(MomX.pXX)) - (*(MomX.pX))*(*(MomX.pX));
 			MinSigX = DiffractionLimitedPropagatedSpotSize('x', pRadAccessData, ie);
 			MinSigXe2 = MinSigX*MinSigX;
 			if(SigXe2 < MinSigXe2) *(MomX.pXX) = (MinSigXe2 + (*(MomX.pX))*(*(MomX.pX)));
-			
+
 			SigZe2 = (*(MomX.pZZ)) - (*(MomX.pZ))*(*(MomX.pZ));
 			MinSigZ = DiffractionLimitedPropagatedSpotSize('z', pRadAccessData, ie);
 			MinSigZe2 = MinSigZ*MinSigZ;
 			if(SigZe2 < MinSigZe2) *(MomX.pZZ) = (MinSigZe2 + (*(MomX.pZ))*(*(MomX.pZ)));
-			
+
 			if(FillMomRatios)
 			{
 				tMomRatArray->RxxMomX = ((*(MomX.pXX) > 0.)? sqrt(*(MomX.pXX)/OldMomX_xx) : -1.);
@@ -112,30 +113,30 @@ int srTDriftSpace::AuxPropagateRadMoments(srTSRWRadStructAccessData* pRadAccessD
 			//float OldMomZ_zz = *(MomZ.pZZ), OldMomZ_zpzp = *(MomZ.pZPZP);
 			double OldMomZ_xx = *(MomZ.pXX), OldMomZ_xpxp = *(MomZ.pXPXP);
 			double OldMomZ_zz = *(MomZ.pZZ), OldMomZ_zpzp = *(MomZ.pZPZP);
-			
+
 			*v2dAux1 = *(MomZ.pX); *(v2dAux1+1) = *(MomZ.pXP);
 			MultSquareMatrByVect(ax, v2dAux1, 2, v2dAux2);
 			*(MomZ.pX) = *v2dAux2; *(MomZ.pXP) = *(v2dAux2+1);
-			
+
 			*v2dAux1 = *(MomZ.pZ); *(v2dAux1+1) = *(MomZ.pZP);
 			MultSquareMatrByVect(az, v2dAux1, 2, v2dAux2);
 			*(MomZ.pZ) = *v2dAux2; *(MomZ.pZP) = *(v2dAux2+1);
-			
+
 			*v3dAux1 = *(MomZ.pXX); *(v3dAux1+1) = *(MomZ.pXXP); *(v3dAux1+2) = *(MomZ.pXPXP);
 			MultSquareMatrByVect(bx, v3dAux1, 3, v3dAux2);
 			*(MomZ.pXX) = *v3dAux2; *(MomZ.pXXP) = *(v3dAux2+1); *(MomZ.pXPXP) = *(v3dAux2+2);
-			
+
 			*v3dAux1 = *(MomZ.pZZ); *(v3dAux1+1) = *(MomZ.pZZP); *(v3dAux1+2) = *(MomZ.pZPZP);
 			MultSquareMatrByVect(bz, v3dAux1, 3, v3dAux2);
 			*(MomZ.pZZ) = *v3dAux2; *(MomZ.pZZP) = *(v3dAux2+1); *(MomZ.pZPZP) = *(v3dAux2+2);
-			
-			//Protection against zero or negative spot sizes 
+
+			//Protection against zero or negative spot sizes
 			SigXe2 = (*(MomZ.pXX)) - (*(MomZ.pX))*(*(MomZ.pX));
 			if(SigXe2 < MinSigXe2) *(MomZ.pXX) = (MinSigXe2 + (*(MomZ.pX))*(*(MomZ.pX)));
-			
+
 			SigZe2 = (*(MomZ.pZZ)) - (*(MomZ.pZ))*(*(MomZ.pZ));
 			if(SigZe2 < MinSigZe2) *(MomZ.pZZ) = (MinSigZe2 + (*(MomZ.pZ))*(*(MomZ.pZ)));
-			
+
 			if(FillMomRatios)
 			{
 				tMomRatArray->RxxMomZ = ((*(MomZ.pXX) > 0.)? sqrt(*(MomZ.pXX)/OldMomZ_xx) : -1.);
@@ -154,7 +155,7 @@ int srTDriftSpace::AuxPropagateRadMoments(srTSRWRadStructAccessData* pRadAccessD
 				tMomRatArray->RzpzpMomZ = 1;
 			}
 		}
-		
+
 		if(FillMomRatios)
 		{
 			tMomRatArray++;
@@ -202,7 +203,7 @@ int srTDriftSpace::TuneRadForPropMeth_1(srTSRWRadStructAccessData* pRadAccessDat
 		if(result = SetRadRepres(pRadAccessData, 0)) return result;
 
 	if(result = PropagateRadMoments(pRadAccessData, MomRatArray)) return result;
-	
+
 	srTMomentsRatios* tMomRatArray = MomRatArray;
 
 	//float pxMaxMomX = (float)(1.e-23), pxMinMomX = (float)(1.e+23), pzMaxMomX = (float)(1.e-23), pzMinMomX = (float)(1.e+23);
@@ -221,7 +222,7 @@ int srTDriftSpace::TuneRadForPropMeth_1(srTSRWRadStructAccessData* pRadAccessDat
 		if(tMomRatArray->RzzMomZ > pzMaxMomZ) pzMaxMomZ = tMomRatArray->RzzMomZ;
 		if(tMomRatArray->RzzMomX < pzMinMomX) pzMinMomX = tMomRatArray->RzzMomX;
 		if(tMomRatArray->RzzMomZ < pzMinMomZ) pzMinMomZ = tMomRatArray->RzzMomZ;
-	
+
 		tMomRatArray++;
 	}
 
@@ -254,7 +255,7 @@ int srTDriftSpace::TuneRadForPropMeth_1(srTSRWRadStructAccessData* pRadAccessDat
 	if(!xPostResizeUndefined)
 	{
 		char xPostResizeNeeded = (1.- ResizeTol > pxMax);
-		if(xPostResizeNeeded) 
+		if(xPostResizeNeeded)
 		{
 			PostResize.pxm = pxMax;
 		}
@@ -264,7 +265,7 @@ int srTDriftSpace::TuneRadForPropMeth_1(srTSRWRadStructAccessData* pRadAccessDat
 	if(!zPostResizeUndefined)
 	{
 		char zPostResizeNeeded = (1.- ResizeTol > pzMax);
-		if(zPostResizeNeeded) 
+		if(zPostResizeNeeded)
 		{
 			PostResize.pzm = pzMax;
 		}
@@ -398,7 +399,7 @@ int srTDriftSpace::PropagateRadiationSimple_PropToWaist(srTSRWRadStructAccessDat
 		DataPtrsForWfrEdgeCorr.DisposeData();
 	}
 
-	double qxCen = -pRadAccessData->xc*InvLambda_m/pRadAccessData->RobsX; 
+	double qxCen = -pRadAccessData->xc*InvLambda_m/pRadAccessData->RobsX;
 	double qzCen = -pRadAccessData->zc*InvLambda_m/pRadAccessData->RobsZ;
 
 // Puting back some parameters
@@ -421,7 +422,7 @@ int srTDriftSpace::PropagateRadiationSimple_PropToWaist(srTSRWRadStructAccessDat
 int srTDriftSpace::PropagateRadiationSimple_PropFromWaist(srTSRWRadStructAccessData* pRadAccessData)
 {//Should be very similar to PropagateRadiationSimple_PropToWaist, consider merging
 	int result = 0;
-	
+
 	SetupPropBufVars_PropFromWaist(pRadAccessData);
 	if(pRadAccessData->Pres != 0) if(result = SetRadRepres(pRadAccessData, 0)) return result;
 
@@ -620,7 +621,7 @@ void srTDriftSpace::SetupPropBufVars_AnalytTreatQuadPhaseTerm(srTSRWRadStructAcc
 	//testOC30092011
 	if(!PropBufVars.UseExactRxRzForAnalytTreatQuadPhaseTerm)
 	{
-		if(PropBufVars.AnalytTreatSubType == 1) 
+		if(PropBufVars.AnalytTreatSubType == 1)
 		{
 			EstimateWfrRadToSub_AnalytTreatQuadPhaseTerm(pRadAccessData, trueRx, trueRz);
 
@@ -628,17 +629,17 @@ void srTDriftSpace::SetupPropBufVars_AnalytTreatQuadPhaseTerm(srTSRWRadStructAcc
 			//srwlPrintTime(":SetupPropBufVars_AnalytTreatQuadPhaseTerm:EstimateWfrRadToSub_AnalytTreatQuadPhaseTerm",&start);
 		}
 		//OC15102011 -- under testing (disadvantage of the previous version is the dependence of "trueR" on statistical moments)
-		else if(PropBufVars.AnalytTreatSubType == 2) 
+		else if(PropBufVars.AnalytTreatSubType == 2)
 		{
 			EstimateWfrRadToSub2_AnalytTreatQuadPhaseTerm(pRadAccessData, trueRx, trueRz); //OC22042013 (uncommented)
-		
+
 			//Added by S.Yakubov (for profiling?) at parallelizing SRW via OpenMP:
 			//srwlPrintTime(":SetupPropBufVars_AnalytTreatQuadPhaseTerm:EstimateWfrRadToSub2_AnalytTreatQuadPhaseTerm",&start);
 		}
 	}
 
-	//if(pRadAccessData->RobsX != 0) 
-	if(trueRx != 0) 
+	//if(pRadAccessData->RobsX != 0)
+	if(trueRx != 0)
 	{
 		//PropBufVars.invRx = 1./pRadAccessData->RobsX;
 		PropBufVars.invRx = 1./trueRx;
@@ -656,15 +657,15 @@ void srTDriftSpace::SetupPropBufVars_AnalytTreatQuadPhaseTerm(srTSRWRadStructAcc
 			//PropBufVars.invRxL = 1./(Length + pRadAccessData->RobsX);
 			PropBufVars.invRxL = 1./(Length + trueRx);
 		}
-		else 
+		else
 		{
 			PropBufVars.Lx = infLarge;
 			PropBufVars.invRxL = infLarge;
 		}
 	}
 
-	//if(pRadAccessData->RobsZ != 0) 
-	if(trueRz != 0) 
+	//if(pRadAccessData->RobsZ != 0)
+	if(trueRz != 0)
 	{
 		//PropBufVars.invRz = 1./pRadAccessData->RobsZ;
 		PropBufVars.invRz = 1./trueRz;
@@ -682,7 +683,7 @@ void srTDriftSpace::SetupPropBufVars_AnalytTreatQuadPhaseTerm(srTSRWRadStructAcc
 			//PropBufVars.invRzL = 1./(Length + pRadAccessData->RobsZ);
 			PropBufVars.invRzL = 1./(Length + trueRz);
 		}
-		else 
+		else
 		{
 			PropBufVars.Lz = infLarge;
 			PropBufVars.invRzL = infLarge;
@@ -790,7 +791,7 @@ void srTDriftSpace::EstimateWfrRadToSub_AnalytTreatQuadPhaseTerm(srTSRWRadStruct
 	//long offsetMom = 0;
 	//const int numStatMom = 11;
 	int ieCen = 0;
-	if((pRadAccessData->ne > 1) && (pRadAccessData->eStep > 0)) 
+	if((pRadAccessData->ne > 1) && (pRadAccessData->eStep > 0))
 	{
 		photEn0 = pRadAccessData->avgPhotEn;
 
@@ -1066,7 +1067,7 @@ void srTDriftSpace::EstimateTrueWfrRadAndMaxLeff_AnalytTreatQuadPhaseTerm(srTSRW
 	double photEn0 = pRadAccessData->eStart;
 	if(pRadAccessData->ne > 1) photEn0 = pRadAccessData->avgPhotEn;
 	double Pi_d_LambdaM = photEn0*2.53384080189E+06;
-	
+
 	if((pRadAccessData->RobsX != 0) && (SigXp != 0))
 	{
 		//double w0x = 1./(Pi_d_LambdaM*SigXp);
@@ -1094,7 +1095,7 @@ void srTDriftSpace::EstimateTrueWfrRadAndMaxLeff_AnalytTreatQuadPhaseTerm(srTSRW
 
 //*************************************************************************
 
-int srTDriftSpace::PropagateRadiationSimple_NumIntFresnel(srTSRWRadStructAccessData* pRadAccessData) 
+int srTDriftSpace::PropagateRadiationSimple_NumIntFresnel(srTSRWRadStructAccessData* pRadAccessData)
 {//OC100914 Aux. method for testing / benchmarking
 //This method attempts to calculate 2D Fresnel integral using the standard numerical integration
 //(e.g. for testing accuracy of the FTT-based integration)
@@ -1149,7 +1150,7 @@ int srTDriftSpace::PropagateRadiationSimple_NumIntFresnel(srTSRWRadStructAccessD
 			long long izPerZ = iz*perZ;
 			double x = pRadAccessData->xStart;
 			for(long ix=0; ix<pRadAccessData->nx; ix++)
-			{			
+			{
 				double z1 = pRadAccessData->zStart;
 				for(long iz1=0; iz1<pRadAccessData->nz; iz1++)
 				{
@@ -1269,7 +1270,7 @@ int srTDriftSpace::PropagateRadiationSimple1D_PropToWaist(srTRadSect1D* pSect1D)
 	//for(long i=0; i<TwoNp; i++)
 	for(long long i=0; i<TwoNp; i++)
 	{
-		*(tAuxX++) = *(tEx++); 
+		*(tAuxX++) = *(tEx++);
 		*(tAuxZ++) = *(tEz++);
 	}
 
@@ -1349,8 +1350,8 @@ int srTDriftSpace::ResizeBeforePropToWaistIfNecessary(srTSRWRadStructAccessData*
 	double ResAfter_pxm = 1;
 	if(pRadAccessData->pResAfter != 0) ResAfter_pxm = pRadAccessData->pResAfter->pxm;
 
-	double pxd = ::fabs(2.3*ResAfter_pxm*xRange*pRadAccessData->xStep/(LambdaM_Length)); 
-	double pxdOutOfSpot = ::fabs(2*(pRadAccessData->RobsX + Length)*xAbsMax*pRadAccessData->xStep/((pRadAccessData->RobsX)*LambdaM_Length)); 
+	double pxd = ::fabs(2.3*ResAfter_pxm*xRange*pRadAccessData->xStep/(LambdaM_Length));
+	double pxdOutOfSpot = ::fabs(2*(pRadAccessData->RobsX + Length)*xAbsMax*pRadAccessData->xStep/((pRadAccessData->RobsX)*LambdaM_Length));
 	if(pxd < pxdOutOfSpot) pxd = pxdOutOfSpot;
 
 	//to improve !!!
@@ -1381,7 +1382,7 @@ int srTDriftSpace::ResizeBeforePropToWaistIfNecessary(srTSRWRadStructAccessData*
 	if(pRadAccessData->pResAfter != 0) ResAfter_pzm = pRadAccessData->pResAfter->pzm;
 
 	double pzd = ::fabs(1.*ResAfter_pzm*zRange*pRadAccessData->zStep/(LambdaM_Length));
-	double pzdOutOfSpot = ::fabs(2*(pRadAccessData->RobsZ + Length)*zAbsMax*pRadAccessData->zStep/((pRadAccessData->RobsZ)*LambdaM_Length)); 
+	double pzdOutOfSpot = ::fabs(2*(pRadAccessData->RobsZ + Length)*zAbsMax*pRadAccessData->zStep/((pRadAccessData->RobsZ)*LambdaM_Length));
 	if(pzd < pzdOutOfSpot) pzd = pzdOutOfSpot;
 
 	if(::fabs(pzd - 1.) < DiffAllowResize) pzd = 1.;
@@ -1421,14 +1422,14 @@ int srTDriftSpace::ResizeBeforePropToWaistIfNecessary(srTSRWRadStructAccessData*
 		char ResolutionWasReduced = 0;
 		while(MemAvail < MemForResize)
 		{
-			Resize.pxd *= PdReduceCoef; 
+			Resize.pxd *= PdReduceCoef;
 			double xRangeNew = Resize.pxd*LambdaM_Length*pRadAccessData->UnderSamplingX/pRadAccessData->xStep;
 
 			double xRangeShouldBe = xRange*pRadAccessData->pResAfter->pxm;
 			pRadAccessData->pResAfter->pxm = xRangeShouldBe/xRangeNew;
 			if(pRadAccessData->pResAfter->pxm > 1.) pRadAccessData->pResAfter->pxm = 1.;
-			
-			Resize.pzd *= PdReduceCoef; 
+
+			Resize.pzd *= PdReduceCoef;
 			double zRangeNew = Resize.pzd*LambdaM_Length*pRadAccessData->UnderSamplingZ/pRadAccessData->zStep;
 
 			double zRangeShouldBe = zRange*pRadAccessData->pResAfter->pzm;

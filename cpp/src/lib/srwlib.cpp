@@ -120,14 +120,14 @@ EXP int CALL srwlUtiGetErrText(char* t, int errNo)
 	CErrWarn srwlErWar;
 
 	if(t == 0) return 0;
-	if(errNo > 0) 
+	if(errNo > 0)
 	{
 		//const char* sErr = CErrWarn::GetError(errNo);
 		const char* sErr = srwlErWar.GetError(errNo);
 		if(sErr != 0) strcpy(t, sErr);
 	}
 	//else if(errNo < 0) strcpy(t, CErrWarn::GetWarning(errNo));
-	else if(errNo < 0) 
+	else if(errNo < 0)
 	{
 		//strcpy(t, CErrWarn::GetWarning(warNo));
 		//const char* sWar = CErrWarn::GetWarning(errNo);
@@ -150,7 +150,7 @@ bool TryToCopyMagFldInsteadOfInterp(SRWLMagFldC* pDispMagFld, SRWLMagFldC* pMagF
 	   (pMagFld->arXc[0] != pDispMagFld->arXc[0]) ||
 	   (pMagFld->arYc[0] != pDispMagFld->arYc[0]) ||
 	   (pMagFld->arZc[0] != pDispMagFld->arZc[0])) return false;
-	   
+
 	if(((pMagFld->arVx != 0) && (pDispMagFld->arVx == 0)) ||
 	   ((pMagFld->arVx == 0) && (pDispMagFld->arVx != 0))) return false;
 	else if((pMagFld->arVx != 0) && (pDispMagFld->arVx != 0))
@@ -169,7 +169,7 @@ bool TryToCopyMagFldInsteadOfInterp(SRWLMagFldC* pDispMagFld, SRWLMagFldC* pMagF
 	{
 		if(pMagFld->arVz[0] != pDispMagFld->arVz[0]) return false;
 	}
-		
+
 	if(((pMagFld->arAng != 0) && (pDispMagFld->arAng == 0)) ||
 	   ((pMagFld->arAng == 0) && (pDispMagFld->arAng != 0))) return false;
 	else if((pMagFld->arAng != 0) && (pDispMagFld->arAng != 0))
@@ -241,7 +241,7 @@ bool TryToCopyMagFldInsteadOfInterp(SRWLMagFldC* pDispMagFld, SRWLMagFldC* pMagF
 		double *tBzIn = pInFld3D->arBz, *tBzOut = pOutFld3D->arBz;
 
 		double cx = 1., cy = 1.; //OC25012018
-		if(pMagFld->arPar3 != 0) cx = pMagFld->arPar3[0]; 
+		if(pMagFld->arPar3 != 0) cx = pMagFld->arPar3[0];
 		if(pMagFld->arPar4 != 0) cy = pMagFld->arPar4[0];
 		for(long long i = 0; i < nTot; i++)
 		{
@@ -262,7 +262,7 @@ EXP int CALL srwlCalcMagFld(SRWLMagFldC* pDispMagFld, SRWLMagFldC* pMagFld, doub
 {
 	if((pDispMagFld == 0) || (pMagFld == 0)) return SRWL_NO_FUNC_ARG_DATA;
 	if((pDispMagFld->nElem != 1) || (pDispMagFld->arMagFldTypes[0] != 'a')) return SRWL_INCORRECT_PARAM_FOR_MAG_FLD_COMP;
-	try 
+	try
 	{
 		int typeCalc = int(precPar[0]);
 		if((typeCalc > 0) && (typeCalc < 3))
@@ -287,15 +287,15 @@ EXP int CALL srwlCalcMagFld(SRWLMagFldC* pDispMagFld, SRWLMagFldC* pMagFld, doub
 		TVector3d vDispCenP(0.,0.,0.);
 		if((pDispMagFld->arXc != 0) && (pDispMagFld->arYc != 0) && (pDispMagFld->arZc != 0))
 		{
-			vDispCenP.x = pDispMagFld->arXc[0]; 
-			vDispCenP.y = pDispMagFld->arYc[0]; 
+			vDispCenP.x = pDispMagFld->arXc[0];
+			vDispCenP.y = pDispMagFld->arYc[0];
 			vDispCenP.z = pDispMagFld->arZc[0];
 		}
 		TVector3d vDispAxV(0.,0.,0.);
 		if((pDispMagFld->arVx != 0) && (pDispMagFld->arVy != 0) && (pDispMagFld->arVz != 0))
 		{
-			vDispAxV.x = pDispMagFld->arVx[0]; 
-			vDispAxV.y = pDispMagFld->arVy[0]; 
+			vDispAxV.x = pDispMagFld->arVx[0];
+			vDispAxV.y = pDispMagFld->arVy[0];
 			vDispAxV.z = pDispMagFld->arVz[0];
 		}
 		double ang = 0.;
@@ -303,15 +303,15 @@ EXP int CALL srwlCalcMagFld(SRWLMagFldC* pDispMagFld, SRWLMagFldC* pMagFld, doub
 
 		//srTMagFld3d magFld3d(pFld3D->rx, pFld3D->nx, pFld3D->ry, pFld3D->ny, pFld3D->rz, pFld3D->nz, pFld3D->arX, pFld3D->arY, pFld3D->arZ, pFld3D->arBx, pFld3D->arBy, pFld3D->arBz, pFld3D->nRep, pFld3D->interp, 0, vDispCenP);
 		srTMagFld3d magFld3d(pFld3D->rx, pFld3D->nx, pFld3D->ry, pFld3D->ny, pFld3D->rz, pFld3D->nz, pFld3D->arX, pFld3D->arY, pFld3D->arZ, pFld3D->arBx, pFld3D->arBy, pFld3D->arBz, pFld3D->nRep, pFld3D->interp, 0, vDispCenP, vDispAxV, ang); //OC170615
-		
+
 		//int typeCalc = int(precPar[0]);
 		if(typeCalc == 0) magFld3d.tabulateB(&magCont);
 		else if((typeCalc > 0) && (typeCalc < 3)) magFld3d.tabInterpB(magCont, precPar, pMagFld->arPar1, pMagFld->arPar2, pMagFld->arPar3, pMagFld->arPar4);
 
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
-	{ 
+	catch(int erNo)
+	{
 		return erNo;
 	}
 	return 0;
@@ -324,7 +324,7 @@ EXP int CALL srwlCalcPartTraj(SRWLPrtTrj* pTrj, SRWLMagFldC* pMagFld, double* pr
 	if((pTrj == 0) || (pMagFld == 0)) return SRWL_NO_FUNC_ARG_DATA;
 	if((pTrj->arX == 0) || (pTrj->arXp == 0) || (pTrj->arY == 0) || (pTrj->arYp == 0) || (pTrj->np <= 0)) return SRWL_INCORRECT_TRJ_STRUCT;
 
-	try 
+	try
 	{
 		const double elecEn0 = 0.51099890221e-03; //[GeV]
 		SRWLParticle &part = pTrj->partInitCond;
@@ -337,7 +337,7 @@ EXP int CALL srwlCalcPartTraj(SRWLPrtTrj* pTrj, SRWLMagFldC* pMagFld, double* pr
 		CSmartPtr<srTMagElem> hMagElem(new srTMagFldCont(*pMagFld, vZero, vZero)); //OC170615
 
 		double &sSt = pTrj->ctStart, &sEn = pTrj->ctEnd;
-		if(sSt >= sEn) 
+		if(sSt >= sEn)
 		{//set sSt and sEn to full range of magnetic field defined
 			hMagElem.rep->GetMagnFieldLongLim(sSt, sEn);
 
@@ -359,8 +359,8 @@ EXP int CALL srwlCalcPartTraj(SRWLPrtTrj* pTrj, SRWLMagFldC* pMagFld, double* pr
 
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
-	{ 
+	catch(int erNo)
+	{
 		return erNo;
 	}
 	return 0;
@@ -373,7 +373,7 @@ EXP int CALL srwlCalcPartTrajFromKickMatr(SRWLPrtTrj* pTrj, SRWLKickM* arKickM, 
 	if((pTrj == 0) || (arKickM == 0) || (nKickM <= 0)) return SRWL_NO_FUNC_ARG_DATA;
 	if((pTrj->arX == 0) || (pTrj->arXp == 0) || (pTrj->arY == 0) || (pTrj->arYp == 0) || (pTrj->np <= 0)) return SRWL_INCORRECT_TRJ_STRUCT;
 
-	try 
+	try
 	{
 		const double elecEn0 = 0.51099890221e-03; //[GeV]
 		SRWLParticle &part = pTrj->partInitCond;
@@ -385,8 +385,8 @@ EXP int CALL srwlCalcPartTrajFromKickMatr(SRWLPrtTrj* pTrj, SRWLKickM* arKickM, 
 
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
-	{ 
+	catch(int erNo)
+	{
 		return erNo;
 	}
 	return 0;
@@ -409,7 +409,7 @@ EXP int CALL srwlCalcElecFieldSR(SRWLWfr* pWfr, SRWLPrtTrj* pTrj, SRWLMagFldC* p
 	if((!trjIsDefined) && (!fldIsDefined)) return SRWL_INCORRECT_PARAM_FOR_SR_COMP;
 	int locErNo = 0;
 
-	try 
+	try
 	{
 		if(!trjIsDefined)
 		{
@@ -453,8 +453,8 @@ EXP int CALL srwlCalcElecFieldSR(SRWLWfr* pWfr, SRWLPrtTrj* pTrj, SRWLMagFldC* p
 		srTWfrSmp auxSmp;
 		wfr.SetObsParamFromWfr(auxSmp);
 		//precPar = array('d', [meth, relPrec, zStartInteg, zEndInteg, npTraj, 0, sampFactNxNyForProp])
-		
-		char calcTerminTerms = 1; //by default do calculate two terminating terms 
+
+		char calcTerminTerms = 1; //by default do calculate two terminating terms
 		if((nPrecPar <= 0) || (nPrecPar > 5)) calcTerminTerms = (char)precPar[5];
 
 		//srTParPrecElecFld precElecFld((int)precPar[0], precPar[1], precPar[2], precPar[3], precPar[6]);
@@ -466,7 +466,7 @@ EXP int CALL srwlCalcElecFieldSR(SRWLWfr* pWfr, SRWLPrtTrj* pTrj, SRWLMagFldC* p
 		wfr.OutSRWRadPtrs(*pWfr);
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
+	catch(int erNo)
 	{
 		locErNo = erNo;
 		//return erNo;
@@ -479,7 +479,7 @@ EXP int CALL srwlCalcElecFieldSR(SRWLWfr* pWfr, SRWLPrtTrj* pTrj, SRWLMagFldC* p
 		if(pTrj->arYp != 0) { delete[] pTrj->arYp; pTrj->arYp = 0;}
 		if(pTrj->arZ != 0) { delete[] pTrj->arZ; pTrj->arZ = 0;}
 		if(pTrj->arZp != 0) { delete[] pTrj->arZp; pTrj->arZp = 0;}
-		delete pTrj; 
+		delete pTrj;
 	}
 	return locErNo;
 }
@@ -490,12 +490,14 @@ EXP int CALL srwlCalcElecFieldGaussian(SRWLWfr* pWfr, SRWLGsnBm* pGsnBm, double*
 {
 	if((pWfr == 0) || (pGsnBm == 0)) return SRWL_INCORRECT_PARAM_FOR_GAUS_BEAM_COMP;
 
+        std::cout << "inside srwlCalcElecFieldGaussian\n";
+
 	int locErNo = 0;
-	try 
+	try
 	{
 		double arMom1[] = {pGsnBm->x, pGsnBm->xp, pGsnBm->y, pGsnBm->yp};
 		srTGsnBeam GsnBm(-1, pGsnBm->polar, pGsnBm->sigX, pGsnBm->mx, pGsnBm->sigY, pGsnBm->my, pGsnBm->sigT, 1, arMom1, pGsnBm->z, pGsnBm->repRate, pGsnBm->pulseEn, pGsnBm->avgPhotEn);
-		
+
 		srTSRWRadStructAccessData wfr(pWfr, &GsnBm, precPar); //ATTENTION: this may request for changing numbers of points in the wavefront mesh
 		srTWfrSmp auxSmp;
 		wfr.SetObsParamFromWfr(auxSmp);
@@ -505,7 +507,7 @@ EXP int CALL srwlCalcElecFieldGaussian(SRWLWfr* pWfr, SRWLGsnBm* pGsnBm, double*
 
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
+	catch(int erNo)
 	{
 		locErNo = erNo;
 		//return erNo;
@@ -520,7 +522,7 @@ EXP int CALL srwlCalcElecFieldPointSrc(SRWLWfr* pWfr, SRWLPtSrc* pPtSrc, double*
 	if(pWfr == 0) return SRWL_INCORRECT_PARAM_FOR_SPHER_WAVE_COMP;
 
 	int locErNo = 0;
-	try 
+	try
 	{
 		srTIsotrSrc IsotrSrc(pPtSrc);
 		srTSRWRadStructAccessData wfr(pWfr, pPtSrc->z, precPar); //ATTENTION: this may request for changing numbers of points in the wavefront mesh
@@ -533,7 +535,7 @@ EXP int CALL srwlCalcElecFieldPointSrc(SRWLWfr* pWfr, SRWLPtSrc* pPtSrc, double*
 
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
+	catch(int erNo)
 	{
 		locErNo = erNo;
 		//return erNo;
@@ -548,7 +550,7 @@ EXP int CALL srwlCalcStokesUR(SRWLStokes* pStokes, SRWLPartBeam* pElBeam, SRWLMa
 	if((pStokes == 0) || (pElBeam == 0) || (pUnd == 0)) return SRWL_INCORRECT_PARAM_FOR_SR_COMP;
 
 	int locErNo = 0;
-	try 
+	try
 	{
 		const double elecEn0 = 0.51099890221e-03; //[GeV]
 		SRWLParticle &part = pElBeam->partStatMom1;
@@ -589,7 +591,7 @@ EXP int CALL srwlCalcStokesUR(SRWLStokes* pStokes, SRWLPartBeam* pElBeam, SRWLMa
 
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
+	catch(int erNo)
 	{
 		locErNo = erNo;
 	}
@@ -614,7 +616,7 @@ EXP int CALL srwlCalcPowDenSR(SRWLStokes* pStokes, SRWLPartBeam* pElBeam, SRWLPr
 	if((!trjIsDefined) && (!fldIsDefined)) return SRWL_INCORRECT_PARAM_FOR_SR_POW_COMP;
 
 	int locErNo = 0;
-	try 
+	try
 	{
 		if(!trjIsDefined)
 		{
@@ -680,7 +682,7 @@ EXP int CALL srwlCalcPowDenSR(SRWLStokes* pStokes, SRWLPartBeam* pElBeam, SRWLPr
 
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
+	catch(int erNo)
 	{
 		locErNo = erNo;
 	}
@@ -692,7 +694,7 @@ EXP int CALL srwlCalcPowDenSR(SRWLStokes* pStokes, SRWLPartBeam* pElBeam, SRWLPr
 		if(pTrj->arYp != 0) { delete[] pTrj->arYp; pTrj->arYp = 0;}
 		if(pTrj->arZ != 0) { delete[] pTrj->arZ; pTrj->arZ = 0;}
 		if(pTrj->arZp != 0) { delete[] pTrj->arZp; pTrj->arZp = 0;}
-		delete pTrj; 
+		delete pTrj;
 	}
 	return locErNo;
 }
@@ -706,12 +708,12 @@ EXP int CALL srwlCalcIntFromElecField(char* pInt, SRWLWfr* pWfr, char polar, cha
 
 	if((pWfr == 0) || (pInt == 0)) return SRWL_INCORRECT_PARAM_FOR_INT_EXTR;
 
-	try 
+	try
 	{
 		srTSRWRadStructAccessData wfr(pWfr);
 		CHGenObj hWfr(&wfr, true);
 		srTRadGenManip radGenManip(hWfr);
-		
+
 		////Re-defining intType
 		////from SRWL convention: 0- Single-Elec. Intensity; 1- Multi-Elec. Intensity; 2- Single-Elec. Flux; 3- Multi-Elec. Flux; 4- Single-Elec. Rad. Phase; 5- Re(E); 6- Im(E); 7- Time or Photon Energy Integrated Intensity
 		////to old SRW convention: 0- Single-Elec. Intensity; 1- Multi-Elec. Intensity; 2- Single-Elec. Rad. Phase; 3- Re(E); 4- Single-Elec. Flux; 5- Multi-Elec. Flux; 6- Im(E); 7- Time or Photon Energy Integrated Intensity
@@ -732,7 +734,7 @@ EXP int CALL srwlCalcIntFromElecField(char* pInt, SRWLWfr* pWfr, char polar, cha
 		//wfr.OutSRWRadPtrs(*pWfr); //not necessary?
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
+	catch(int erNo)
 	{
 		return erNo;
 	}
@@ -751,7 +753,7 @@ EXP int CALL srwlResizeElecField(SRWLWfr* pWfr, char type, double* par)
 	//if((type != 'c') && (type != 'C') && (type != 'a') && (type != 'A') /*&& (type != 'f') && (type != 'F') && (type != 't') && (type != 'T')*/) return SRWL_INCORRECT_PARAM_FOR_RESIZE;
 	//resizing vs photon energy / time yet to be implemented!
 
-	try 
+	try
 	{
 		int locErNo = 0;
 		srTGenOptElem GenOptElem;
@@ -786,7 +788,7 @@ EXP int CALL srwlResizeElecField(SRWLWfr* pWfr, char type, double* par)
 		wfr.OutSRWRadPtrs(*pWfr);
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
+	catch(int erNo)
 	{
 		return erNo;
 	}
@@ -802,13 +804,13 @@ EXP int CALL srwlSetRepresElecField(SRWLWfr* pWfr, char repr)
 	//get_walltime (&start);
 
 	if(pWfr == 0) return SRWL_INCORRECT_PARAM_FOR_CHANGE_REP;
-	
+
 	char reprCoordOrAng=0, reprFreqOrTime=0;
 	if((repr == 'c') || (repr == 'C') || (repr == 'a') || (repr == 'A')) reprCoordOrAng = repr;
 	if((repr == 'f') || (repr == 'F') || (repr == 't') || (repr == 'T')) reprFreqOrTime = repr;
 	if((!reprCoordOrAng) && (!reprFreqOrTime)) return SRWL_INCORRECT_PARAM_FOR_CHANGE_REP;
 
-	try 
+	try
 	{
 		srTSRWRadStructAccessData wfr(pWfr);
 
@@ -819,17 +821,17 @@ EXP int CALL srwlSetRepresElecField(SRWLWfr* pWfr, char repr)
 
 		if(reprCoordOrAng) locErNo = wfr.SetRepresCA(reprCoordOrAng); //set Coordinate or Angular representation
 		else if(reprFreqOrTime) locErNo = wfr.SetRepresFT(reprFreqOrTime); //set Frequency or Time representation
-		
+
 		//Added by S.Yakubov (for profiling?) at parallelizing SRW via OpenMP:
 		//srwlPrintTime(":srwlSetRepresElecField : wfr.SetRepresFT",&start);
-		
+
 		if(locErNo) return locErNo;
 
 		wfr.OutSRWRadPtrs(*pWfr);
 
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
+	catch(int erNo)
 	{
 		return erNo;
 	}
@@ -848,7 +850,8 @@ EXP int CALL srwlPropagElecField(SRWLWfr* pWfr, SRWLOptC* pOpt, int nInt, char**
 	//double start;
 	//get_walltime (&start);
 
-	try 
+	cout << "inside srwlPropagElecField()";
+	try
 	{
 		srTCompositeOptElem optCont(*pOpt);
 		srTSRWRadStructAccessData wfr(pWfr);
@@ -884,7 +887,7 @@ EXP int CALL srwlUtiFFT(char* pcData, char typeData, double* arMesh, int nMesh, 
 	if((pcData == 0) || (arMesh == 0) || (typeData != 'f') || (nMesh < 3) || (dir == 0)) return SRWL_INCORRECT_PARAM_FOR_FFT;
 	//to support typeData == 'd' later
 	int locErNo = 0;
-	try 
+	try
 	{
 		long nx = (long)arMesh[2];
 		if(nx <= 1) return SRWL_INCORRECT_PARAM_FOR_FFT;
@@ -952,7 +955,7 @@ EXP int CALL srwlUtiConvWithGaussian(char* pcData, char typeData, double* arMesh
 	if((pcData == 0) || (arMesh == 0) || (typeData != 'f') || (nMesh < 3)) return SRWL_INCORRECT_PARAM_FOR_CONV_WITH_GAUS;
 	//to support typeData == 'd' later
 	int locErNo = 0;
-	try 
+	try
 	{
 		long nx = (long)arMesh[2];
 		if(nx <= 1) return SRWL_INCORRECT_PARAM_FOR_FFT;
@@ -960,7 +963,7 @@ EXP int CALL srwlUtiConvWithGaussian(char* pcData, char typeData, double* arMesh
 
 		long ny = 1;
 		double yStart = 0., yStep = 0.;
-		if(nMesh >= 6) 
+		if(nMesh >= 6)
 		{
 			yStart = arMesh[3];
 			yStep = arMesh[4];
@@ -1005,7 +1008,7 @@ EXP int CALL srwlUtiConvWithGaussian(char* pcData, char typeData, double* arMesh
 					long long ofst2 = ofst << 1;
 					arDataC[ofst2] = pfData[ofst]; arDataC[ofst2+1] = 0.;
 				}
-				if(nxAdj > nx) 
+				if(nxAdj > nx)
 				{
 					//long ofst = iy_nx + nx;
 					//long ofst2 = ofst << 1;
@@ -1026,7 +1029,7 @@ EXP int CALL srwlUtiConvWithGaussian(char* pcData, char typeData, double* arMesh
 					long long ofst2 = ofst << 1;
 					arDataC[ofst2] = 0.; arDataC[ofst2+1] = 0.;
 				}
-				if(nxAdj > nx) 
+				if(nxAdj > nx)
 				{
 					//long ofst = ny_nx + nx;
 					//long ofst2 = ofst << 1;
@@ -1046,7 +1049,7 @@ EXP int CALL srwlUtiConvWithGaussian(char* pcData, char typeData, double* arMesh
 		double yStepTr = arMesh[4];
 
 		double sigX = *arSig, sigY = 0., alp = 0.;
-		if(dimFFT > 1) 
+		if(dimFFT > 1)
 		{
 			sigY = *(arSig + 1);
 			alp = *(arSig + 2);
@@ -1056,9 +1059,9 @@ EXP int CALL srwlUtiConvWithGaussian(char* pcData, char typeData, double* arMesh
 		//const double c0 = 2.*pi*pi;
 		double c0 = 2.*pi*pi;
 		double sigXe2 = sigX*sigX, sigYe2 = sigY*sigY;
-		
+
 		double cxy = 0.;
-		if(alp != 0.) 
+		if(alp != 0.)
 		{
 			double alp_sigXe2_sigYe2 = alp*sigXe2*sigYe2;
 			c0 /= (1. - alp*alp_sigXe2_sigYe2);
@@ -1127,7 +1130,7 @@ EXP int CALL srwlUtiConvWithGaussian(char* pcData, char typeData, double* arMesh
 EXP int CALL srwlUtiIntInf(double* arInf, char* pcData, char typeData, SRWLRadMesh* pMesh)
 {//OC24092018
 	if((arInf == 0) || (pcData == 0) || ((typeData != 'f') && (typeData != 'd')) || (pMesh == 0)) return SRWL_INCORRECT_PARAM_FOR_INT_STAT;
-	try 
+	try
 	{
 		srTWaveAccessData InData(pcData, typeData, pMesh); //OC13112018
 		if(InData.AmOfDims > 2) throw SRWL_INCORRECT_PARAM_FOR_INT_STAT; //to update in the future
@@ -1141,45 +1144,45 @@ EXP int CALL srwlUtiIntInf(double* arInf, char* pcData, char typeData, SRWLRadMe
 		int n1 = 0, n2 = 0, n3 = 0;
 		double start1 = 0, start2 = 0, start3 = 0;
 		double step1 = 0, step2 = 0, step3 = 0;
-		if(pMesh->ne > 1) 
+		if(pMesh->ne > 1)
 		{
-			nDims++; 
+			nDims++;
 			n1 = pMesh->ne;
 			start1 = pMesh->eStart;
 			step1 = (pMesh->eFin - start1)/(n1 - 1);
 		}
-		if(pMesh->nx > 1) 
+		if(pMesh->nx > 1)
 		{
 			nDims++;
-			if(n1 == 0) 
+			if(n1 == 0)
 			{
 				n1 = pMesh->nx;
 				start1 = pMesh->xStart;
 				step1 = (pMesh->xFin - start1)/(n1 - 1);
 			}
-			else 
+			else
 			{
 				n2 = pMesh->nx;
 				start2 = pMesh->xStart;
 				step2 = (pMesh->xFin - start2)/(n2 - 1);
 			}
 		}
-		if(pMesh->ny > 1) 
+		if(pMesh->ny > 1)
 		{
 			nDims++;
-			if(n1 == 0) 
+			if(n1 == 0)
 			{
 				n1 = pMesh->ny;
 				start1 = pMesh->yStart;
 				step1 = (pMesh->yFin - start1)/(n1 - 1);
 			}
-			else if(n2 == 0) 
+			else if(n2 == 0)
 			{
 				n2 = pMesh->ny;
 				start2 = pMesh->yStart;
 				step2 = (pMesh->yFin - start2)/(n2 - 1);
 			}
-			else 
+			else
 			{
 				n3 = pMesh->ny;
 				start3 = pMesh->yStart;
@@ -1232,10 +1235,10 @@ EXP int CALL srwlUtiIntInf(double* arInf, char* pcData, char typeData, SRWLRadMe
 
 EXP int CALL srwlUtiIntProc(char* pcI1, char typeI1, SRWLRadMesh* pMesh1, char* pcI2, char typeI2, SRWLRadMesh* pMesh2, double* arPar)
 {//OC13112018
-	if((pcI1 == 0) || ((typeI1 != 'f') && (typeI1 != 'd')) || (pMesh1 == 0) || 
+	if((pcI1 == 0) || ((typeI1 != 'f') && (typeI1 != 'd')) || (pMesh1 == 0) ||
 	   (pcI2 == 0) || ((typeI2 != 'f') && (typeI2 != 'd')) || (pMesh2 == 0) || (arPar == 0)) return SRWL_INCORRECT_PARAM_FOR_INT_PROC;
 
-	try 
+	try
 	{
 		srTWaveAccessData wI1(pcI1, typeI1, pMesh1), wI2(pcI2, typeI2, pMesh2);
 		srTRadGenManip::IntProc(&wI1, &wI2, arPar);
@@ -1254,7 +1257,7 @@ EXP int CALL srwlUtiUndFromMagFldTab(SRWLMagFldC* pUndCnt, SRWLMagFldC* pMagCnt,
 	if((pUndCnt == 0) || (pMagCnt == 0) || (arPrecPar == 0)) return SRWL_INCORRECT_PARAM_FOR_CONV_MAG_2_PER;
 	if((pUndCnt->nElem != 1) || (pMagCnt->nElem != 1)) return SRWL_INCORRECT_PARAM_FOR_CONV_MAG_2_PER;
 
-	try 
+	try
 	{
 		SRWLMagFld3D *pFld3D = (SRWLMagFld3D*)(pMagCnt->arMagFld[0]);
 		double sStart = pMagCnt->arZc[0] - 0.5*pFld3D->rz;
@@ -1269,8 +1272,8 @@ EXP int CALL srwlUtiUndFromMagFldTab(SRWLMagFldC* pUndCnt, SRWLMagFldC* pMagCnt,
 		if(pMagFldPer != 0) delete pMagFldPer;
 		UtiWarnCheck();
 	}
-	catch(int erNo) 
-	{ 
+	catch(int erNo)
+	{
 		return erNo;
 	}
 	return 0;
@@ -1282,12 +1285,12 @@ EXP int CALL srwlUtiUndFindMagFldInterpInds(int* arResInds, int* pnResInds, doub
 {
 	if((arResInds == 0) || (pnResInds == 0) || ((arGaps == 0) && (arPhases == 0)) || (nVals <= 0)) return SRWL_INCORRECT_PARAM_FOR_UND_FLD_INTERP_IND_SEARCH;
 
-	try 
+	try
 	{
 		CGenMathInterp::SelectPointsForInterp1d2d(arGaps, arPhases, nVals, arResInds, *pnResInds, arPrecPar);
 	}
-	catch(int erNo) 
-	{ 
+	catch(int erNo)
+	{
 		return erNo;
 	}
 	return 0;
@@ -1300,7 +1303,7 @@ EXP int CALL srwlPropagRadMultiE(SRWLStokes* pStokes, SRWLWfr* pWfr0, SRWLOptC* 
 	if((pStokes == 0) || (pWfr0 == 0) || (pOpt == 0) || (precPar == 0)) return SRWL_INCORRECT_PARAM_FOR_WFR_PROP;
 	int locErNo = 0;
 
-	try 
+	try
 	{
 		srTSRWRadStructAccessData wfr(pWfr0);
 		srTCompositeOptElem optCont(*pOpt);
